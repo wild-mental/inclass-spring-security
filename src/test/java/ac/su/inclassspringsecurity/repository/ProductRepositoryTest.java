@@ -152,7 +152,7 @@ class ProductRepositoryTest {
             .where(QProduct.product.price.between(5000, 10000));
 
         // 코드 흐름에 따라 정렬 여부 지정
-        boolean orderByPriceAsc = true;
+        boolean orderByPriceAsc = true;  // 웹에서 사용자 입력으로 받았을 경우 동적 쿼리 체감 가능
         if (orderByPriceAsc) {
             query = query.orderBy(QProduct.product.price.asc());
         }
