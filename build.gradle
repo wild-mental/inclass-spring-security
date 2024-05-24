@@ -24,7 +24,7 @@ repositories {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    // implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-web-services'
     implementation 'org.springframework.kafka:spring-kafka'
@@ -49,6 +49,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf:3.2.5'
     // https://mvnrepository.com/artifact/nz.net.ultraq.thymeleaf/thymeleaf-layout-dialect
     implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:3.3.0'
+    // validation
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
 }
 
 tasks.named('test') {
