@@ -2,7 +2,9 @@ package ac.su.inclassspringsecurity.service;
 
 import ac.su.inclassspringsecurity.constant.ProductStatusEnum;
 import ac.su.inclassspringsecurity.domain.Product;
+import ac.su.inclassspringsecurity.domain.QProduct;
 import ac.su.inclassspringsecurity.repository.ProductRepository;
+import com.querydsl.core.BooleanBuilder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -98,5 +100,38 @@ public class ProductService {
         Pageable pageable = PageRequest.of(page, size);
         Page<Product> productPage = productRepository.findAll(pageable);
         return productPage.getContent();
+    }
+
+    public List<Product> getValidProductsList(int page, int size) {
+        // 페이징 처리를 적용해 상품 리스트 조회
+        Pageable pageable = PageRequest.of(page, size);
+        BooleanBuilder predicate = new BooleanBuilder();
+        predicate.or(
+            QProduct.product.status.eq(ProductStatusEnum.IN_STOCK)
+        );
+        predicate.or(
+            QProduct.product.status.eq(ProductStatusEnum.PREPARING)
+        );
+        predicate.or(
+            QProduct.product.status.eq(ProductStatusEnum.SOLD_OUT)
+        );
+        Page<Product> productPage = productRepository.findAll(predicate, pageable);
+        return productPage.getContent();
+    }
+
+    public Page<Product> getValidProductsPage(int page, int size) {
+        // 페이징 처리를 적용해 상품 리스트 조회
+        Pageable pageable = PageRequest.of(page, size);
+        BooleanBuilder predicate = new BooleanBuilder();
+        predicate.or(
+            QProduct.product.status.eq(ProductStatusEnum.IN_STOCK)
+        );
+        predicate.or(
+            QProduct.product.status.eq(ProductStatusEnum.PREPARING)
+        );
+        predicate.or(
+            QProduct.product.status.eq(ProductStatusEnum.SOLD_OUT)
+        );
+        return productRepository.findAll(predicate, pageable);
     }
 }

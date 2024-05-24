@@ -14,7 +14,7 @@ import java.util.Optional;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/products")
-public class ProductController {
+public class ProductRestController {
     private final ProductService productService;
     
     // 생성자 주입 방식 -> Annotation 으로 대체 가능
