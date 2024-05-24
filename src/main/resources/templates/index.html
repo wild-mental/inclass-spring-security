@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/base_layout}"
+      lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>상품 관리 App 메인</title>
+</head>
+    <header layout:fragment="header">
+        <h1>인덱스 페이지 헤더 입니다!</h1>
+        <hr>
+    </header>
+
+    <main layout:fragment="contents">
+        <a href="/products">REST API URL 1 (html 기본 상대 경로)</a> <br>
+        <a th:href="@{/products}">REST API URL 2 (thymeleaf 상대 경로)</a> <br>
+        <a href="/thymeleaf/ex01">타임리프 테스트 URL (상대 경로)</a> <br>
+        <a href="http://localhost:8080/thymeleaf/ex01">타임리프 테스트 URL (절대 경로)</a> <br>
+        <a th:href="@{/thymeleaf/ex01}">타임리프 테스트 URL (th:href)</a> <br>
+        <a th:href="@{/thymeleaf/products-page}">타임리프 상품목록 페이지 URL (기본값 파라미터)</a> <br>
+        <a th:href="@{/thymeleaf/products-page(page='1', size='5')}">타임리프 상품목록 페이지 URL (커스텀 파라미터)</a> <br>
+        <h4>레이아웃이 적용된 상품 목록 페이지로 이동</h4>
+        <ul>
+            <li><a th:href="@{/products-layout}">상품목록 : 레이아웃 적용</a> </li>
+        </ul>
+        <br>
+        <h4>페이지 네비게이션이 적용된 상품 목록 페이지로 이동</h4>
+        <ul>
+            <li><a th:href="@{/products-pagenav}">상품목록 : 페이지 네비게이션 적용</a> <br></li>
+        </ul>
+    </main>
+</html>

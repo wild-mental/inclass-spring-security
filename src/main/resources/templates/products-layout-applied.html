@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/base_layout}"
+      lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+    <main layout:fragment="contents">
+        <table border="1">
+            <thead>
+            <tr>
+                <th>상태</th>
+                <th>상품명</th>
+                <th>가격</th>
+                <th>상세정보</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="product : ${products}"
+                th:class="${product.status.name().contentEquals('SOLD_OUT')} ? 'bg-danger' : 'bg-info'">
+                <td th:if="${product.status.name().contentEquals('SOLD_OUT')}"
+                    th:text="매진">-</td>
+                <!--                th:class="bg-danger"-->
+                <td th:unless="${product.status.name().contentEquals('SOLD_OUT')}"
+                    th:text="정상">-</td>
+                <!--                th:class="bg-info"-->
+                <td th:text="${product.name}">-</td>
+                <!--            <td th:text="${product.status}">-</td>-->
+                <td th:text="${product.price}">-</td>
+                <td th:text="${product.description}">-</td>
+            </tr>
+            </tbody>
+        </table>
+    </main>
+
+</body>
+</html>

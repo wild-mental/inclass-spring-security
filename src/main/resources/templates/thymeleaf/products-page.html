@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>상품리스트 페이지</title>
+    <style>
+        .bg-danger {
+            background-color: lightcoral;
+        }
+        .bg-info {
+            background-color: lightgreen;
+        }
+    </style>
+</head>
+<body>
+<!--    <div th:each="product : ${products}">-->
+<!--        <p th:text="'상품명 : ' + ${product.name} + ' 가격 : ' + ${product.price} + '원'"></p>-->
+<!--        &lt;!&ndash; th 네임 스페이스를 활용한 구문과 Java 객체 활용 메서드 호출 등 본격적인 로직 구현! &ndash;&gt;-->
+<!--        <p th:text="'상품상세 : ' + ${product.toString()}"></p>-->
+<!--    </div>-->
+    <table border="1">
+        <thead>
+        <tr>
+            <th>상태</th>
+            <th>상품명</th>
+            <th>가격</th>
+            <th>상세정보</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="product : ${products}"
+            th:class="${product.status.name().contentEquals('SOLD_OUT')} ? 'bg-danger' : 'bg-info'">
+            <td th:if="${product.status.name().contentEquals('SOLD_OUT')}"
+                th:text="매진">-</td>
+<!--                th:class="bg-danger"-->
+            <td th:unless="${product.status.name().contentEquals('SOLD_OUT')}"
+                th:text="정상">-</td>
+<!--                th:class="bg-info"-->
+            <td th:text="${product.name}">-</td>
+<!--            <td th:text="${product.status}">-</td>-->
+            <td th:text="${product.price}">-</td>
+            <td th:text="${product.description}">-</td>
+        </tr>
+        </tbody>
+    </table>
+</body>
+</html>

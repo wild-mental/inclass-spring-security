@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/base_layout}"
+      lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<main layout:fragment="contents">
+    <table border="1">
+        <thead>
+        <tr>
+            <th>상태</th>
+            <th>상품명</th>
+            <th>가격</th>
+            <th>상세정보</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="product : ${productsPage.getContent()}"
+            th:class="${product.status.name().contentEquals('SOLD_OUT')} ? 'bg-danger' : 'bg-info'">
+            <td th:if="${product.status.name().contentEquals('SOLD_OUT')}"
+                th:text="매진">-</td>
+            <!--                th:class="bg-danger"-->
+            <td th:unless="${product.status.name().contentEquals('SOLD_OUT')}"
+                th:text="정상">-</td>
+            <!--                th:class="bg-info"-->
+            <td th:text="${product.name}">-</td>
+            <!--            <td th:text="${product.status}">-</td>-->
+            <td th:text="${product.price}">-</td>
+            <td th:text="${product.description}">-</td>
+        </tr>
+        </tbody>
+    </table>
+    <!-- 페이지 순회 버튼 처리 시작 -->
+    <div th:if="${productsPage.hasContent()}">
+        <ul class="pagination justify-content-center">
+            <!-- 이전 페이지 이동 버튼 -->
+            <li class="page-item" th:classappend="${!productsPage.hasPrevious()} ? 'disabled'">
+                <a class="page-link" th:href="@{|?page=${productsPage.number-1}&size=${pageSize}}">이전 페이지</a>
+            </li>
+            <!-- 특정 페이지 이동 버튼 -->
+            <li th:each="page: ${#numbers.sequence(0, productsPage.totalPages-1)}"
+                th:classappend="${page == productsPage.number} ? 'disabled'"
+                th:if="${page - 2 <= pageNum and pageNum <= page + 2}"
+            >
+                <a class="page-link" th:text="${page}" th:href="@{|?page=${page}&size=${pageSize}}"></a>
+            </li>
+            <!-- 다음 페이지 이동 버튼 -->
+            <li class="page-item" th:classappend="${!productsPage.hasNext()} ? 'disabled'">
+                <a class="page-link" th:href="@{|?page=${productsPage.number+1}&size=${pageSize}}">다음 페이지</a></li>
+        </ul>
+    </div>
+</main>
+</html>
