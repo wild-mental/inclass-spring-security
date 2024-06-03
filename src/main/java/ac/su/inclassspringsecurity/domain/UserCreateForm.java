@@ -7,8 +7,8 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 
-@Getter @Setter
-public class UserCreateForm {
+@Getter @Setter // Setter 를 제거하고 immutable 하게 다루기 위한 조치 필요
+public class UserCreateForm {  // DTO 클래스 역할을 하는 Form 클래스
     @Size(min = 3, max = 25)
     @NotEmpty(message = "사용자ID는 필수항목입니다.")
     private String username;
