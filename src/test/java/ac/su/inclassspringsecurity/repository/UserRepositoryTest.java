@@ -9,6 +9,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.TestPropertySource;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -45,6 +47,19 @@ class UserRepositoryTest {
         exists = userRepository.existsByUsername("test1");
         System.out.println(exists);
         assert (!exists);
+    }
+
+    @Test
+    @DisplayName("email 필드 기준 유저 검색")
+    public void findByEmail() {
+        create();
+        Optional<User> foundUser = userRepository.findByEmail("sample.sam.ple");
+        assert foundUser.isPresent();
+        System.out.println("유저 검색 성공!");
+
+        foundUser = userRepository.findByEmail("sample.sam.ple2");
+        assert foundUser.isEmpty();
+        System.out.println("없는 유저 검색 결과 빈값 반환!");
     }
 
     @Test

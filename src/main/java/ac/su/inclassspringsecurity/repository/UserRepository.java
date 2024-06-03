@@ -14,5 +14,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     // (1) 중복 유저 체크를 위한 기본 쿼리 (username, email) 준비
     boolean existsByUsername(String username);
-    boolean existsByEmail(String email);
+
+    // 로그인 인증 시 유저 데이터 조회 가능 (pass, role)
+    Optional<User> findByEmail(String email);
+
+    boolean existsByEmail(String email);       // 로그인 인증 시 유저 유무 확인 가능
 }
