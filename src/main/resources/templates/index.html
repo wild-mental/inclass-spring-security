@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="~{layouts/base_layout}"
       lang="en">
 <head>
@@ -13,6 +14,12 @@
     </header>
 
     <main layout:fragment="contents">
+        <div sec:authorize="isAuthenticated()">
+            <h3>Welcome, <span sec:authentication="name"></span>!</h3>
+        </div>
+<!--        <div sec:authorize="hasAuthority(SUPER_USER)">-->
+<!--            <h3>Welcome, <span sec:authentication="name"></span>!</h3>-->
+<!--        </div>-->
         <a href="/products">REST API URL 1 (html 기본 상대 경로)</a> <br>
         <a th:href="@{/products}">REST API URL 2 (thymeleaf 상대 경로)</a> <br>
         <a href="/thymeleaf/ex01">타임리프 테스트 URL (상대 경로)</a> <br>

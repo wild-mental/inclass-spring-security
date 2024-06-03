@@ -1,3 +1,7 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      lang="en">
 <nav th:fragment="navbarFragment" class="navbar navbar-expand-lg navbar-light bg-primary">
     <div class="container-fluid">
         <a class="navbar-brand" href="#">Navbar</a>
@@ -12,6 +16,15 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link"
+                       sec:authorize="isAnonymous()"
+                       th:href="@{/users/login}">로그인</a>
+                    <a class="nav-link"
+                       sec:authorize="isAuthenticated()"
+                       th:href="@{/users/logout}">로그아웃</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link"
+                       sec:authorize="isAnonymous()"
                        th:href="@{/users/signup}">회원가입</a>
                 </li>
                 <li class="nav-item dropdown">
@@ -36,3 +49,4 @@
         </div>
     </div>
 </nav>
+</html>
