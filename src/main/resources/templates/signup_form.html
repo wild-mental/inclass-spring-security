@@ -17,6 +17,7 @@
     <div class="mb-3">
       <label for="username" class="form-label">사용자ID</label>
       <input id="username" type="text" th:field="*{username}" class="form-control">
+      <!-- th:field 구문은 name 속성과 value 속성을 모두 자동으로 관리해 줌 -->
       <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="invalid-feedback d-block"></div>
     </div>
     <div class="mb-3">
