@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -40,6 +41,16 @@ public class SecurityConfig {
                             "/users/login"   // 로그인 URL 비회원 접속 허용
                         )
                     ).permitAll()
+                    .requestMatchers(
+                        new AntPathRequestMatcher(
+                            "/products-temp/**", HttpMethod.GET.name()
+                        )
+                    ).permitAll()
+                    .requestMatchers(
+                        new AntPathRequestMatcher(
+                            "/products-temp/**"
+                        )
+                    ).hasAnyRole("SUPER_ADMIN", "ADMIN")
                     .anyRequest().authenticated()  // 나머지 모든 URL 에 회원 로그인 요구
             )
             .csrf(

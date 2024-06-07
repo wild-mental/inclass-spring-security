@@ -134,4 +134,12 @@ public class ProductService {
         );
         return productRepository.findAll(predicate, pageable);
     }
+
+    public Product saveProductUpsert(Product product) {
+        Product updatedProduct = updateProductPut(product.getId(), product);
+        if (updatedProduct != null) {
+            return updatedProduct;
+        }
+        return createProduct(product);
+    }
 }

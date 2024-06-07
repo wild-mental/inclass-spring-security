@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="~{layouts/base_layout}"
       lang="en">
 <head>
@@ -15,6 +16,7 @@
             <th>상품명</th>
             <th>가격</th>
             <th>상세정보</th>
+            <th sec:authorize="hasAnyRole('SUPER_ADMIN', 'ADMIN')">상세 페이지</th>
         </tr>
         </thead>
         <tbody>
@@ -30,6 +32,9 @@
             <!--            <td th:text="${product.status}">-</td>-->
             <td th:text="${product.price}">-</td>
             <td th:text="${product.description}">-</td>
+            <td sec:authorize="hasAnyRole('SUPER_ADMIN', 'ADMIN')">
+                <a th:href="@{/products-temp/{id}(id=${product.id})}">상세 페이지</a>
+            </td>
         </tr>
         </tbody>
     </table>
@@ -42,7 +47,7 @@
             </li>
             <!-- 특정 페이지 이동 버튼 -->
             <li th:each="page: ${#numbers.sequence(0, productsPage.totalPages-1)}"
-                th:classappend="${page == productsPage.number} ? 'disabled'"
+                th:classappend="${page == productsPage.number} ? 'active'"
                 th:if="${page - 2 <= pageNum and pageNum <= page + 2}"
             >
                 <a class="page-link" th:text="${page}" th:href="@{|?page=${page}&size=${pageSize}}"></a>

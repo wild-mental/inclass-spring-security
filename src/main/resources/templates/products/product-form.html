@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{layouts/base_layout}"
+      lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>상품 상세페이지</title>
+</head>
+<header layout:fragment="header">
+  <h1>상품 상세 정보 조회</h1>
+  <hr>
+</header>
+
+<main layout:fragment="contents">
+  <h1>Product Form</h1>
+  <form th:action="@{/products-temp/{id}(id=${product.id})}" th:object="${product}" method="post">
+    <label for="id">id:</label>
+    <input type="text" id="id" th:field="*{id}" />
+    <br>
+    <label for="name">Name:</label>
+    <input type="text" id="name" th:field="*{name}" />
+    <br>
+    <label for="price">Price:</label>
+    <input type="number" id="price" th:field="*{price}" />
+    <br>
+    <label for="stockCount">Stock Count:</label>
+    <input type="number" id="stockCount" th:field="*{stockCount}" />
+    <br>
+    <label for="status">Status:</label>
+    <select id="status" th:field="*{status}">
+      <option value="PREPARING">PREPARING</option>
+      <option value="IN_STOCK">IN_STOCK</option>
+      <option value="SOLD_OUT">SOLD_OUT</option>
+      <option value="INVALID">INVALID</option>
+      <option value="DELETED">DELETED</option>
+    </select>
+    <br>
+    <label for="description">Description:</label>
+    <textarea id="description" th:field="*{description}"></textarea>
+    <br>
+    <label for="memo">Memo:</label>
+    <textarea id="memo" th:field="*{memo}"></textarea>
+    <br>
+    <label for="image">Image:</label>
+    <input type="text" id="image" th:field="*{image}" />
+    <br>
+    <label for="createdAt">Created At:</label>
+    <input type="text" id="createdAt" th:field="*{createdAt}" readonly/>
+    <br>
+    <label for="updatedAt">Updated At:</label>
+    <input type="text" id="updatedAt" th:field="*{updatedAt}" readonly/>
+    <br>
+    <button type="submit">Save</button>
+    <a th:href="@{/products-temp/products-pagenav}">상품 리스트 보기</a>
+  </form>
+</main>
+</html>
