@@ -1,9 +1,11 @@
 package ac.su.inclassspringsecurity.repository;
 
+import ac.su.inclassspringsecurity.constant.UserRole;
 import ac.su.inclassspringsecurity.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,4 +21,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByEmail(String email);
 
     boolean existsByEmail(String email);       // 로그인 인증 시 유저 유무 확인 가능
+
+    List<User> findByRole(UserRole role);
 }

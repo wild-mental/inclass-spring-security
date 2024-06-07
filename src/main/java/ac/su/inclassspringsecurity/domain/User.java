@@ -24,7 +24,7 @@ public class User {
     private String email;
 
     @Column(nullable = false)
-    private UserRole Role;
+    private UserRole role;
 
     @Override
     public String toString() {
@@ -33,7 +33,7 @@ public class User {
             ", username='" + username + '\'' +
             ", password='" + password + '\'' +
             ", email='" + email + '\'' +
-            ", Role=" + Role +
+            ", Role=" + role +
             '}';
     }
 }

@@ -9,6 +9,10 @@ import ac.su.inclassspringsecurity.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 
 // userdetails 패키지에 Spring Security 가 제공하는 인증용 User 관련 클래스 모두 들어있음
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -18,6 +22,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Duration;
 //import java.util.ArrayList;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -105,5 +111,66 @@ public class UserService implements UserDetailsService {
             );
         }
         return null;
+    }
+
+    public List<User> makeDummyData(int count) {
+        // 1) 기존에 유저 수가 10명 이상 이미 생성 되어 있으면
+        //    skip 하고 기존 리스트 반환
+        List<User> users = userRepository.findAll();
+        if (users.size() >= 10) {
+            return users;
+        }
+        // 2) 유저 타입별 count 개수 만큼 생성
+        for (UserRole role : UserRole.values()) {
+            for (int i= 1; i <= count; i++) {
+                User newUser = new User();
+                newUser.setUsername(role.name() + i);
+                newUser.setPassword(passwordEncoder.encode("1234"));
+                newUser.setEmail(role.name() + i + "@tt.cc");
+                newUser.setRole(role);
+                users.add(newUser);
+            }
+        }
+        return userRepository.saveAll(users);
+    }
+
+    public List<User> getUsersByRole(UserRole role) {
+        // 아래 validation 은 불필요
+//        if (role == null || role.equals(UserRole.USER)) {
+//            return null;
+//        }
+        List<UserRole> roles = new ArrayList<>();
+        for (int i = role.ordinal(); i < UserRole.values().length; i++) {
+            roles.add(UserRole.values()[i]);
+        }
+        List<User> users = new ArrayList<>();
+        for (UserRole targetRole : roles) {
+            users.addAll(userRepository.findByRole(targetRole));
+        }
+        return users;
+    }
+
+    public Page<User> getUsersPageByRole(UserRole role, int page, int size) {
+        // 아래 validation 은 불필요
+//        if (role == null || role.equals(UserRole.USER)) {
+//            return null;
+//        }
+        List<UserRole> roles = new ArrayList<>();
+        for (int i = role.ordinal(); i < UserRole.values().length; i++) {
+            roles.add(UserRole.values()[i]);
+        }
+        List<User> users = new ArrayList<>();
+        for (UserRole targetRole : roles) {
+            users.addAll(userRepository.findByRole(targetRole));
+        }
+        // List -> Page 변환
+        Pageable pageable = PageRequest.of(page, size);
+        int start = Math.min((int) pageable.getOffset(), users.size());  // 시작 인덱스를 잡기 위한 기준점 설정
+        int end = Math.min((start + pageable.getPageSize()), users.size());  // 종료 인덱스를 잡기 위한 기준점 설정
+        // DB 상의 인덱스가 아니라, List 의 인덱스를 기준으로 자르기
+        List<User> usersPageContent = users.subList(start, end);
+
+        // Page 객체 생성 및 반환
+        return new PageImpl<>(usersPageContent, pageable, users.size());
     }
 }
