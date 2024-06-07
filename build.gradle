@@ -53,8 +53,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     // https://mvnrepository.com/artifact/org.thymeleaf.extras/thymeleaf-extras-springsecurity6
     implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
-//    // Spring Session JDBC
-//    implementation 'org.springframework.session:spring-session-jdbc'
+    // Spring Session JDBC
+    implementation 'org.springframework.session:spring-session-jdbc'
     // JWT
     implementation 'io.jsonwebtoken:jjwt:0.9.1'
     implementation 'javax.xml.bind:jaxb-api:2.3.1'

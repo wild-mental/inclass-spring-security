@@ -27,7 +27,8 @@ public class SecurityConfig {
         http
             .authorizeHttpRequests(  // 요청 인가 여부 결정을 위한 조건 판단
                 (authorizeHttpRequests) ->
-                    authorizeHttpRequests.requestMatchers(
+                    authorizeHttpRequests
+                    .requestMatchers(
                         // Apache Ant 스타일 패턴을 사용해 URL 매칭 정의
                         new AntPathRequestMatcher(
                             "/"              // 메인 페이지 비회원 접속 허용
@@ -61,12 +62,12 @@ public class SecurityConfig {
                     )
             )
             .formLogin(
-//                (formLogin) ->
-//                    formLogin  // Controller 에 PostMapping URL 바인딩이 없어도
-//                               // POST 요청을 아래 라인에서 수신하고 인증 처리
-//                        .loginPage("/users/login")
-//                        .defaultSuccessUrl("/")
-                AbstractHttpConfigurer::disable
+                (formLogin) ->
+                    formLogin  // Controller 에 PostMapping URL 바인딩이 없어도
+                               // POST 요청을 아래 라인에서 수신하고 인증 처리
+                        .loginPage("/users/login")
+                        .defaultSuccessUrl("/")
+//                AbstractHttpConfigurer::disable
             )
             .logout(
                 (logout) ->
@@ -75,15 +76,15 @@ public class SecurityConfig {
                         .logoutSuccessUrl("/")
                         .invalidateHttpSession(true)
             )
-            .sessionManagement(
-                (sessionConfig) -> {
-                    sessionConfig.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-                }
-            )
-            .addFilterBefore(
-                tokenAuthenticationFilter(),  // 토큰을 username, password 검사보다 먼저 검사한다.
-                UsernamePasswordAuthenticationFilter.class
-            )
+//            .sessionManagement(
+//                (sessionConfig) -> {
+//                    sessionConfig.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+//                }
+//            )
+//            .addFilterBefore(
+//                tokenAuthenticationFilter(),  // 토큰을 username, password 검사보다 먼저 검사한다.
+//                UsernamePasswordAuthenticationFilter.class
+//            )
         ;
         return http.build();
     }
