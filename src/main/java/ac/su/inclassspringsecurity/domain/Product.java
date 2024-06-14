@@ -33,15 +33,15 @@ public class Product {
 
     // 추가 데이터 컬럼
     // 상품 상세 정보
-    @Column(nullable = false)
+    @Column
     private String description;
 
     // 상품 메모
-    @Column(nullable = false)
+    @Column
     private String memo;
 
     // 상품 이미지
-    @Column(nullable = false)
+    @Column
     private String image;
 
     @Override
