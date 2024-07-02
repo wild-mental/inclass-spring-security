@@ -80,6 +80,8 @@ class OrderProductRepositoryTest {
     }
 
     @Transactional  // -> 효력이 없음
+    // 효력이 없는 이유 : 클래스 단위로 외부 클래스 를 호출할 때에, Proxy 패턴을 통해 적용 되기 때문
+    // 클래스 간의 호출인 경우만 Transaction 의 시작과 종료를 제어 하게 된다.
     public void createDummyOrderProduct(){
         // 2) 더미 데이터 생성 : 총액 계산 및 상품 재고 차감 구현
         // 2-1) User & Order 생성 부분 OrderRepositoryTest 에서 복사

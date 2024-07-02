@@ -20,7 +20,7 @@ import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-@TestPropertySource(locations = "classpath:application-test.properties")
+//@TestPropertySource(locations = "classpath:application-test.properties")
 class OrderRepositoryTest {
     // User & Order 생성 및 테스트
     // 1) 리포지토리 주입
@@ -94,5 +94,12 @@ class OrderRepositoryTest {
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Test
+    void checkOrderLazyUserLoad() {
+        Optional<Order> order = orderRepository.findById(14L);
+        assert order.isPresent();
+        System.out.println(order.get());
     }
 }
