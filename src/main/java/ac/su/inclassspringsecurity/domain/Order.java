@@ -1,6 +1,7 @@
 package ac.su.inclassspringsecurity.domain;
 
 import ac.su.inclassspringsecurity.constant.OrderStatus;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,8 +17,10 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
+    // @OneToOne = @ManyToOne + @JoinColumn(unique = true)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
+    @JsonIgnore
     private User user;
 
     @Column(nullable = false)
@@ -46,7 +49,7 @@ public class Order {
     public String toString() {
         return "Order{" +
             "id=" + id +
-            ", user=" + user +
+//            ", user=" + user +
             ", status=" + status +
             ", createdAt='" + createdAt + '\'' +
             ", updatedAt='" + updatedAt + '\'' +

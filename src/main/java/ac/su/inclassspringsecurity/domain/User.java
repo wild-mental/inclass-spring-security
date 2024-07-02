@@ -1,10 +1,13 @@
 package ac.su.inclassspringsecurity.domain;
 
 import ac.su.inclassspringsecurity.constant.UserRole;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+
+import java.util.List;
 
 @Entity
 @Getter @Setter
@@ -28,12 +31,17 @@ public class User {
     @Column(nullable = false)
     private UserRole role;
 
-    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
-    private Cart cart;
+    // @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<Cart> carts;
 
 //    @OneToOne
 //    @JoinColumn(name = "cart_id")
 //    private Cart cart_id;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<Order> orders;
 
     @Override
     public String toString() {
@@ -43,7 +51,8 @@ public class User {
             ", password='" + password + '\'' +
             ", email='" + email + '\'' +
             ", Role=" + role +
-            (cart != null ? ", cart=" + cart.getId() : "") +
+//            (carts != null ? ", cart=" + carts : "") +
+            (orders != null ? ", order=" + orders : "") +
             '}';
     }
 }

@@ -23,4 +23,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     boolean existsByEmail(String email);       // 로그인 인증 시 유저 유무 확인 가능
 
     List<User> findByRole(UserRole role);
+
+    Optional<User> findFirstByOrderByIdDesc();
 }
