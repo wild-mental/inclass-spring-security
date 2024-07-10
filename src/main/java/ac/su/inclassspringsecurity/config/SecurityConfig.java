@@ -28,40 +28,44 @@ public class SecurityConfig {
         http
             .authorizeHttpRequests(  // 요청 인가 여부 결정을 위한 조건 판단
                 (authorizeHttpRequests) ->
-                    authorizeHttpRequests
-                    .requestMatchers(
-                        // Apache Ant 스타일 패턴을 사용해 URL 매칭 정의
-                        new AntPathRequestMatcher(
-                            "/"              // 메인 페이지 비회원 접속 허용
-                        )
-                    // ).denyAll()
+                    authorizeHttpRequests.requestMatchers(
+                        new AntPathRequestMatcher("/**")
                     ).permitAll()
-                    .requestMatchers(
-                        new AntPathRequestMatcher(
-                            "/users/login"   // 로그인 URL 비회원 접속 허용
-                        )
-                    ).permitAll()
-                    .requestMatchers(
-                        new AntPathRequestMatcher(
-                            "/products-temp/**", HttpMethod.GET.name()
-                        )
-                    ).permitAll()
-                    .requestMatchers(
-                        new AntPathRequestMatcher(
-                            "/products-temp/**"
-                        )
-                    ).hasAnyRole("SUPER_ADMIN", "ADMIN")
-                    .anyRequest().authenticated()  // 나머지 모든 URL 에 회원 로그인 요구
+//                    authorizeHttpRequests
+//                    .requestMatchers(
+//                        // Apache Ant 스타일 패턴을 사용해 URL 매칭 정의
+//                        new AntPathRequestMatcher(
+//                            "/"              // 메인 페이지 비회원 접속 허용
+//                        ),
+//                        new AntPathRequestMatcher(
+//                            "/users/login"   // 로그인 URL 비회원 접속 허용
+//                        ),
+//                        new AntPathRequestMatcher(
+//                            "/csrf-token"   // CSRF 토큰 발급 URL 비회원 접속 허용
+//                        ),
+//                        new AntPathRequestMatcher(
+//                            "/products-temp/**", HttpMethod.GET.name()
+//                        )
+//                    ).permitAll()
+//                    .requestMatchers(
+//                        new AntPathRequestMatcher(
+//                            "/products-temp/**"
+//                        )
+//                    ).hasAnyRole("SUPER_ADMIN", "ADMIN")
+//                    .anyRequest().authenticated()  // 나머지 모든 URL 에 회원 로그인 요구
             )
             .csrf(
-                (csrf) ->
-                    csrf.ignoringRequestMatchers(
-                        // 필요 시 특정 페이지 CSRF 토큰 무시 설정
-                        new AntPathRequestMatcher("/h2-console/**")
-                        // , new AntPathRequestMatcher("/login")
-                        // , new AntPathRequestMatcher("/logout")
-                        // , new AntPathRequestMatcher("/signup")
-                    )
+                (csrf) -> csrf.ignoringRequestMatchers(
+                    new AntPathRequestMatcher("/**")
+                )
+//                (csrf) ->
+//                    csrf.ignoringRequestMatchers(
+//                        // 필요 시 특정 페이지 CSRF 토큰 무시 설정
+//                        new AntPathRequestMatcher("/h2-console/**")
+//                        // , new AntPathRequestMatcher("/login")
+//                        // , new AntPathRequestMatcher("/logout")
+//                        // , new AntPathRequestMatcher("/signup")
+//                    )
             )
             .headers(
                 (headers) ->
