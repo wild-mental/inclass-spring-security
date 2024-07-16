@@ -37,3 +37,4 @@ out/
 .vscode/
 /src/main/generated/ac/su/inclassspringsecurity/domain/QProduct.java
 /src/main/generated/ac/su/inclassspringsecurity/domain/
+/src/main/resources/static/images
