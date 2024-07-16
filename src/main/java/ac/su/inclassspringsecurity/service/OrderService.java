@@ -15,7 +15,7 @@ public class OrderService {
 
     @Transactional
     public Order getOrderWithUserFetched() {
-        Long orderId = 14L;
+        Long orderId = 1L;
         String jpqlJoinQuery =
             "SELECT o " +
             "FROM Order o " +

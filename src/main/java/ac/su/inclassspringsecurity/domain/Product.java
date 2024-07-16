@@ -9,7 +9,7 @@ import lombok.Setter;
 @Getter @Setter
 @Table(name = "product")
 public class Product {
-    @Id
+    @Id  // PK 필드로 설정되면 현재 엔티티의 Identity 를 나타내는 대표 컬럼
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 

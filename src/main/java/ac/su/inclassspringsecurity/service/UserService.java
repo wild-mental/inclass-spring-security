@@ -179,7 +179,7 @@ public class UserService implements UserDetailsService {
     public User getUserWithFetchedOrders() {
         // 1) user 객체 조회, Lazy 필드 조회 없음
         //Optional<User> userOptional = userRepository.findFirstByOrderByIdDesc();
-        Optional<User> userOptional = userRepository.findById(87L);
+        Optional<User> userOptional = userRepository.findById(1L);
         assert userOptional.isPresent();
         User user = userOptional.get();
         // Lazy Loading 방식의 데이터 Fetch 수행

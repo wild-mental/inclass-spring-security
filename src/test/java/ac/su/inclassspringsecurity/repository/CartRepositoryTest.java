@@ -7,6 +7,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.TestPropertySource;
 
 import java.util.Optional;
@@ -22,13 +23,15 @@ class CartRepositoryTest {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     void createDummyData() {
         // 2) Dummy Data 생성 (최소 5개 리스트 기반으로 쿼리 한번에 생성)
         User user = new User();
-        user.setUsername("testUser");
-        user.setPassword("testPassword");
-        user.setEmail("email@tt.cc");
+        user.setUsername("testUser3");
+        user.setPassword(passwordEncoder.encode("testPassword"));
+        user.setEmail("testEmail3@tt.cc");
         user.setRole(UserRole.USER);
         User savedUser = userRepository.save(user);
         System.out.println(savedUser);  // cart 데이터가 아직 없음

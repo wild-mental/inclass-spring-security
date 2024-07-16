@@ -14,6 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.header.writers.frameoptions.XFrameOptionsHeaderWriter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
@@ -30,6 +31,10 @@ public class SecurityConfig {
                 (authorizeHttpRequests) ->
                     authorizeHttpRequests.requestMatchers(
                         new AntPathRequestMatcher("/**")
+//                        , new AntPathRequestMatcher("/**", HttpMethod.POST.name())
+//                        , new AntPathRequestMatcher("/**", HttpMethod.PUT.name())
+//                        , new AntPathRequestMatcher("/**", HttpMethod.PATCH.name())
+//                        , new AntPathRequestMatcher("/**", HttpMethod.DELETE.name())
                     ).permitAll()
 //                    authorizeHttpRequests
 //                    .requestMatchers(
@@ -54,10 +59,15 @@ public class SecurityConfig {
 //                    ).hasAnyRole("SUPER_ADMIN", "ADMIN")
 //                    .anyRequest().authenticated()  // 나머지 모든 URL 에 회원 로그인 요구
             )
+//            .csrf(csrf -> csrf
+//                .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+//            )
             .csrf(
                 (csrf) -> csrf.ignoringRequestMatchers(
-                    new AntPathRequestMatcher("/**")
+                    new AntPathRequestMatcher("/api/**")
+                    , new AntPathRequestMatcher("/users/login")
                 )
+            )
 //                (csrf) ->
 //                    csrf.ignoringRequestMatchers(
 //                        // 필요 시 특정 페이지 CSRF 토큰 무시 설정
@@ -66,7 +76,7 @@ public class SecurityConfig {
 //                        // , new AntPathRequestMatcher("/logout")
 //                        // , new AntPathRequestMatcher("/signup")
 //                    )
-            )
+//            )
             .headers(
                 (headers) ->
                     headers.addHeaderWriter(

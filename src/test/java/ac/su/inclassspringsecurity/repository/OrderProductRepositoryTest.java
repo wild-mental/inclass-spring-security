@@ -118,8 +118,8 @@ class OrderProductRepositoryTest {
         orderProductRepository.saveAll(createdOrderProductList);
 
         //      재고 차감 직전에 에러를 발생 시키기!
-        String errorStr = null;
-        System.out.println(errorStr.length());
+//        String errorStr = null;
+//        System.out.println(errorStr.length());
         //       1) 아는 원인 => 데이터 validation 가능
         //         - 주문 수량이 재고 보다 많을 때 에러가 나는지 확인 (데이터 문제 Validation)
         //       2) 모르는 원인 => 데이터 validation 불가

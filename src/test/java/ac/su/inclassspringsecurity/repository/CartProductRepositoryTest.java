@@ -16,8 +16,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 @SpringBootTest
 @TestPropertySource(locations = "classpath:application-test.properties")
 class CartProductRepositoryTest {
@@ -36,12 +34,12 @@ class CartProductRepositoryTest {
     private CartProductRepository cartProductRepository;
 
     // 2) Dummy Data 생성
-    void CreateDummyData() {
+    void createDummyData() {
         // User, Product, Cart, CartProduct 데이터 생성
         User user = new User();
-        user.setUsername("testUser");
-        user.setPassword("testPassword");
-        user.setEmail("testEmail@tt.cc");
+        user.setUsername("testUser2");
+        user.setPassword("testPassword2");
+        user.setEmail("testEmail2@tt.cc");
         user.setRole(UserRole.USER);
         user = userRepository.save(user);  // User 데이터 저장 후 ID 값이 생성됨
 
@@ -79,9 +77,9 @@ class CartProductRepositoryTest {
         List<User> userList = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
             User user = new User();
-            user.setUsername("testUser" + i);
-            user.setPassword("testPassword" + i);
-            user.setEmail("testEmail" + i + "@tt.cc");
+            user.setUsername("testUser0" + i);
+            user.setPassword("testPassword0" + i);
+            user.setEmail("testEmail0" + i + "@tt.cc");
             user.setRole(UserRole.USER);
             userList.add(user);
         }
@@ -154,7 +152,7 @@ class CartProductRepositoryTest {
     @Test
     @DisplayName("상품 아이디로 카트 상품 조회")
     void findByProductId() {
-        CreateDummyData();
+        createDummyData();
 
         // cart_id 기준으로 CartProduct 데이터 조회
         List<CartProduct> cartProductList = cartProductRepository.findByProductId(1L);
