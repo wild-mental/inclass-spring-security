@@ -7,6 +7,7 @@ import ac.su.inclassspringsecurity.domain.Order;
 import ac.su.inclassspringsecurity.domain.OrderProduct;
 import ac.su.inclassspringsecurity.domain.Product;
 import ac.su.inclassspringsecurity.domain.User;
+import ac.su.inclassspringsecurity.service.OrderProductService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,8 +20,9 @@ import java.util.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-// TestPropertySource 를 별도로 쓰지 않고 MySQL DB 에 직접 테스트 하며 데이터 확인
-//@TestPropertySource(locations = "classpath:application-test.properties")
+// TestPropertySource 를 별도로 쓰지 않고 MySQL DB 에 직접 테스트 하면
+// 개발 시에는 편리하지만, 관리 누락 시 실서버에 반영될 우려가 있으니 주의
+@TestPropertySource(locations = "classpath:application-test.properties")
 class OrderProductRepositoryTest {
     // User & Order & OrderProduct & Product 생성 및 테스트
     // 1) 리포지토리 주입
@@ -32,6 +34,8 @@ class OrderProductRepositoryTest {
     private UserRepository userRepository;
     @Autowired
     private ProductRepository productRepository;
+    @Autowired
+    private OrderProductService orderProductService;
 
     private String createDummyOrder() {
         // 테스트 회차를 반복하며 유저를 여러번 생성할 때,
@@ -139,7 +143,11 @@ class OrderProductRepositoryTest {
         // 여기에 테스트 구현
         // Given - When- Then 패턴으로 구현
         // Given : 테스트 데이터 생성
-        createDummyOrderProduct();
+
+        // Transaction 적용 불가능 호출 (클래스 내부)
+        // createDummyOrderProduct();
+        // Transaction 적용 가능 호출  (클래스 외부)
+        orderProductService.createDummyOrderProduct();
 
         // When : 테스트 메서드 실행
 
